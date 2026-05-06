@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "scripts": {
+    "dev": "npx serve .",
+    "start": "npx serve .",
+    "build": "echo 'No build step required for static site'",
+    "preview": "npx serve ."
+  },
   "dependencies": {
     "@algolia/autocomplete-js": "^1.19.8",
     "@algolia/autocomplete-plugin-query-suggestions": "^1.19.8",
