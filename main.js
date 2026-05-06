@@ -16,8 +16,10 @@ const querySuggestionsPlugin = searchClient
   ? createQuerySuggestionsPlugin({
       searchClient,
       indexName: querySuggestionsIndexName,
-      getSearchParams() {
-        return { hitsPerPage: 5 };
+      getSearchParams({ state }) {
+        return {
+          hitsPerPage: state.query ? 5 : 0,
+        };
       },
       transformSource({ source }) {
         return {
