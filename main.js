@@ -3,11 +3,12 @@ import { createQuerySuggestionsPlugin } from "@algolia/autocomplete-plugin-query
 import "@algolia/autocomplete-theme-classic";
 import { liteClient as algoliasearch } from "algoliasearch/lite";
 
-const appId = import.meta.env.VITE_ALGOLIA_APP_ID;
-const searchApiKey = import.meta.env.VITE_ALGOLIA_SEARCH_API_KEY;
-const indexName = import.meta.env.VITE_ALGOLIA_INDEX_NAME;
-const querySuggestionsIndexName = import.meta.env
-  .VITE_ALGOLIA_QUERY_SUGGESTIONS_INDEX_NAME;
+const appId = "Z519VQ03VH";
+const searchApiKey = "f83dbfd0e04e7b74e598c39c38e4303e";
+const indexName =
+  "production_emea_libertyltd_demandware_net__liberty__products__default";
+const querySuggestionsIndexName =
+  "production_emea_libertyltd_demandware_net__liberty__products__default_query_suggestions";
 
 const searchClient = algoliasearch(appId, searchApiKey);
 
