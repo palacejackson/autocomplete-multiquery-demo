@@ -6,35 +6,36 @@ import { liteClient as algoliasearch } from "algoliasearch/lite";
 const appId = import.meta.env.VITE_ALGOLIA_APP_ID;
 const searchApiKey = import.meta.env.VITE_ALGOLIA_SEARCH_API_KEY;
 const indexName = import.meta.env.VITE_ALGOLIA_INDEX_NAME;
-const querySuggestionsIndexName =
-  import.meta.env.VITE_ALGOLIA_QUERY_SUGGESTIONS_INDEX_NAME;
+const querySuggestionsIndexName = import.meta.env
+  .VITE_ALGOLIA_QUERY_SUGGESTIONS_INDEX_NAME;
 
-const searchClient = algoliasearch(appId, searchApiKey)
-
+const searchClient = algoliasearch(appId, searchApiKey);
 
 const querySuggestionsPlugin = searchClient
   ? createQuerySuggestionsPlugin({
-    searchClient,
-    indexName: querySuggestionsIndexName,
-    getSearchParams() {
-      return { hitsPerPage: 5 };
-    },
-    transformSource({ source }) {
-      return {
-        ...source,
-        sourceId: "query-suggestions",
-        templates: {
-          ...source.templates,
-          header({ html }) {
-            return html`<span class="aa-SourceHeaderTitle">Suggestions</span>`;
+      searchClient,
+      indexName: querySuggestionsIndexName,
+      getSearchParams() {
+        return { hitsPerPage: 5 };
+      },
+      transformSource({ source }) {
+        return {
+          ...source,
+          sourceId: "query-suggestions",
+          templates: {
+            ...source.templates,
+            header({ html }) {
+              return html`<span class="aa-SourceHeaderTitle"
+                >Suggestions</span
+              >`;
+            },
+            item({ item, html }) {
+              return html`<span>${item.query}</span>`;
+            },
           },
-          item({ item, html }) {
-            return html`<span>${item.query}</span>`;
-          },
-        },
-      };
-    },
-  })
+        };
+      },
+    })
   : null;
 
 autocomplete({
@@ -42,10 +43,9 @@ autocomplete({
   placeholder: "Search for products",
   openOnFocus: true,
   detachedMediaQuery: "none",
-  plugins: [querySuggestionsPlugin],
+  plugins: querySuggestionsPlugin ? [querySuggestionsPlugin] : [],
 
   getSources({ query }) {
-
     if (query) {
       return [
         {
@@ -66,7 +66,9 @@ autocomplete({
           },
           templates: {
             header({ html }) {
-              return html`<span class="aa-SourceHeaderTitle">Suggested Products</span>`;
+              return html`<span class="aa-SourceHeaderTitle"
+                >Suggested Products</span
+              >`;
             },
             item({ item, html }) {
               return html`<span>${item.name}</span>`;
@@ -94,19 +96,21 @@ autocomplete({
             ],
             transformResponse({ results }) {
               return (
-                results[0].userData
-                  ?.find((data) => data.brands)
-                  ?.brands ?? []
+                results[0].userData?.find((data) => data.brands)?.brands ?? []
               );
             },
           });
         },
         templates: {
           header({ html }) {
-            return html`<span class="aa-SourceHeaderTitle">Featured brands</span>`;
+            return html`<span class="aa-SourceHeaderTitle"
+              >Featured brands</span
+            >`;
           },
           item({ item, html }) {
-            return html`<a class="aa-ItemLink" href=${item.url}>${item.name}</a>`;
+            return html`<a class="aa-ItemLink" href=${item.url}
+              >${item.name}</a
+            >`;
           },
         },
       },
@@ -127,19 +131,22 @@ autocomplete({
             ],
             transformResponse({ results }) {
               return (
-                results[0].userData
-                  ?.find((data) => data.products)
-                  ?.products ?? []
+                results[0].userData?.find((data) => data.products)?.products ??
+                []
               );
             },
           });
         },
         templates: {
           header({ html }) {
-            return html`<span class="aa-SourceHeaderTitle">Featured products</span>`;
+            return html`<span class="aa-SourceHeaderTitle"
+              >Featured products</span
+            >`;
           },
           item({ item, html }) {
-            return html`<a class="aa-ItemLink" href=${item.url}>${item.name}</a>`;
+            return html`<a class="aa-ItemLink" href=${item.url}
+              >${item.name}</a
+            >`;
           },
         },
       },
