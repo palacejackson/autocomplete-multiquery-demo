@@ -11,7 +11,7 @@
   "tasks": {
     "dev": {
       "name": "dev",
-      "command": "npm run dev",
+      "command": "npm run dev -- --host 0.0.0.0 --port 3000",
       "runAtStart": true,
       "preview": {
         "port": 3000
